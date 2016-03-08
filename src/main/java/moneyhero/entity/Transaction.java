@@ -1,6 +1,6 @@
 package moneyhero.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class Transaction {
 	
     @Basic
     @Column(name = "transaction_timestamp")
-    private LocalDateTime transactionTimestamp;
+    private Date transactionTimestamp;
 	
 	@Basic
 	@Column(name = "description")
@@ -56,9 +56,9 @@ public class Transaction {
 
     protected Transaction() {}
 
-    public Transaction(LocalDateTime transactionTimestamp, String description, Currency currency, Long amount, Account credits, Account debits) {
+    public Transaction(Date transactionTimestamp, String description, Currency currency, Long amount, Account credits, Account debits) {
         this.uuid = UUID.randomUUID();
-        this.transactionTimestamp = transactionTimestamp == null ? LocalDateTime.now() : transactionTimestamp;
+        this.transactionTimestamp = transactionTimestamp == null ? new Date(new java.util.Date().getTime()) : transactionTimestamp;
         this.description = description;
         this.currency = currency;
         this.amount = amount;
@@ -70,7 +70,7 @@ public class Transaction {
 		return uuid;
 	}
 
-	public LocalDateTime getTransactionTimestamp() {
+	public Date getTransactionTimestamp() {
 		return transactionTimestamp;
 	}
 

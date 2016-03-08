@@ -12,6 +12,7 @@ import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
@@ -33,6 +34,8 @@ public class NewTransactionView extends VerticalLayout implements View{
 	    addComponent(new Label("This is the default view"));
 	    
 	    Tree tree = new Tree("Accounts", accountsContainer());
+	    tree.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		tree.setItemCaptionPropertyId("name");
 	   
 	    addComponent(tree);
 	}
@@ -62,7 +65,8 @@ public class NewTransactionView extends VerticalLayout implements View{
 				}
 			}
 			
-			result.setParent(account.getUuid(), ancestor.getUuid());
+			result.setParent(account.getUuid(), ancestor == null ? null : ancestor.getUuid());
+			ancestors.add(account);
 		}
 		return result;
 	}

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -32,7 +33,8 @@ public class Account {
     @Version
     private Integer version;
 	
-	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@OneToMany(mappedBy = "id.account", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@MapKey(name="id.currency")
 	private Map<Currency, AccountAmount> amounts;
 
     protected Account() {}

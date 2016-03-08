@@ -1,11 +1,25 @@
 package moneyhero.entity;
 
 import java.io.Serializable;
-import java.util.UUID;
 
-public class AccountAmountId implements Serializable {
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Embeddable
+public class AccountAmountId implements Serializable{
 	
+	@Basic
+	@Column(name="currency")
+	@Enumerated(EnumType.STRING)
 	private Currency currency;
+	
+	@ManyToOne
+	@JoinColumn(name="uuid")
 	private Account account;
 
 	public AccountAmountId() {
@@ -52,6 +66,6 @@ public class AccountAmountId implements Serializable {
 		return true;
 	}
 
-	
+
 
 }
