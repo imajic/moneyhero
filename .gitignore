@@ -127,3 +127,8 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 
+
+##########################
+## Configurations section
+##########################
+config/
