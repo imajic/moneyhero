@@ -13,6 +13,8 @@ import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name="account")
@@ -23,6 +25,8 @@ public class Account {
     
 	@Basic
 	@Column(name = "designation")
+	@Min(value = 1000000L)
+	@Max(value = 9999999L)
 	private Long designation;
     
 	@Basic
@@ -88,6 +92,24 @@ public class Account {
 			return false;
 		return true;
 	}
-	
-	
+
+	private static long[] powers10 = new long[]{1L,10L,100L,1000L,10000L,100000L,1000000L};
+	public boolean isAncestor(Account toAccount){
+		long diff = toAccount.designation - this.designation;
+		int diffLength = Long.toString(diff).length();
+		return designation % powers10[diffLength] == 0;
+	}
+
+	public boolean isDescendant(Account fromAccount){
+		return fromAccount.isAncestor(this);
+	}
+
+	public int getLevel(){
+		for (int i = powers10.length - 1; i > 0; i--){
+			if (this.getDesignation() % powers10[i] == 0){
+				return powers10.length - i + 1;
+			}
+		}
+		return powers10.length;
+	}
 }
